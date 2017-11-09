@@ -1,0 +1,240 @@
+{
+  "name": "Acount",
+  "base": "User",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "msisdn": {
+      "type": "string",
+      "required": true
+    },
+    "password": {
+      "type": {
+        "required": false
+      }
+    },
+    "email": {
+      "type": {
+        "required": false
+      }
+    },
+    "registration": {
+      "type": {
+        "token": {
+          "code": {
+            "type": "string"
+          },
+          "clientId": {
+            "type": "string"
+          },
+          "expireAt": {
+            "type": "date"
+          }
+        },
+        "expiredTokens": {
+          "type": "array"
+        },
+        "date": {
+          "type": "date"
+        }
+      }
+    },
+    "loginCodes": {
+      "type": "object"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "profiles": {
+      "type": "hasMany",
+      "model": "Profile",
+      "foreignKey": "acountId"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$unauthenticated",
+      "permission": "ALLOW",
+      "property": "requestRegisterCode"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$unauthenticated",
+      "permission": "ALLOW",
+      "property": "registerWithSms"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$unauthenticated",
+      "permission": "ALLOW",
+      "property": "requestLoginCode"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$unauthenticated",
+      "permission": "ALLOW",
+      "property": "loginWithSms"
+    }
+  ],
+  "methods": {
+    "loginWithSms": {
+      "isStatic": true,
+      "accepts": [
+        {
+          "arg": "msisdn",
+          "type": "string",
+          "required": true,
+          "description": "msisdn of the user"
+        },
+        {
+          "arg": "code",
+          "type": "string",
+          "required": true,
+          "description": ""
+        },
+        {
+          "arg": "clientId",
+          "type": "string",
+          "required": true,
+          "description": "unique identifier from client"
+        }
+      ],
+      "returns": [
+        {
+          "arg": "result",
+          "type": "string",
+          "root": false,
+          "description": ""
+        },
+        {
+          "arg": "token",
+          "type": "object",
+          "root": false,
+          "description": ""
+        }
+      ],
+      "description": "Send an sms login form ",
+      "http": [
+        {
+          "path": "/loginwith/sms",
+          "verb": "get"
+        }
+      ]
+    },
+    "requestRegisterCode": {
+      "isStatic": true,
+      "accepts": [
+        {
+          "arg": "msisdn",
+          "type": "string",
+          "required": true,
+          "description": ""
+        },
+        {
+          "arg": "clientId",
+          "type": "string",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "result",
+          "type": "string",
+          "root": false,
+          "description": ""
+        }
+      ],
+      "description": "Creates a new user and send an sms containing registration code.",
+      "http": [
+        {
+          "path": "/request/registercode",
+          "verb": "post"
+        }
+      ]
+    },
+    "registerWithSms": {
+      "isStatic": true,
+      "accepts": [
+        {
+          "arg": "msisdn",
+          "type": "string",
+          "required": true,
+          "description": "msisdn of the user"
+        },
+        {
+          "arg": "code",
+          "type": "string",
+          "required": true,
+          "description": "registration code of the user"
+        },
+        {
+          "arg": "clientId",
+          "type": "string",
+          "required": true,
+          "description": "id of the client"
+        }
+      ],
+      "returns": [
+        {
+          "arg": "result",
+          "type": "string",
+          "root": false,
+          "description": ""
+        },
+        {
+          "arg": "token",
+          "type": "string",
+          "root": false,
+          "description": "authentication token of the user"
+        }
+      ],
+      "description": "register a user by checking the registration code.",
+      "http": [
+        {
+          "path": "/registerwith/sms",
+          "verb": "post"
+        }
+      ]
+    },
+    "requestLoginCode": {
+      "isStatic": true,
+      "accepts": [
+        {
+          "arg": "msisdn",
+          "type": "string",
+          "required": true,
+          "description": ""
+        },
+        {
+          "arg": "clientId",
+          "type": "string",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "result",
+          "type": "string",
+          "root": false,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/request/logincode",
+          "verb": "post"
+        }
+      ]
+    }
+  }
+}

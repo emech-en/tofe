@@ -1,0 +1,51 @@
+{
+  "name": "SmsCommand",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "content": {
+      "type": "string"
+    },
+    "msisdn": {
+      "type": "string",
+      "required": true
+    },
+    "smsId": {
+      "type": "string",
+      "required": true
+    },
+    "command": {
+      "type": "object"
+    },
+    "info": {
+      "type": "object"
+    },
+    "result": {
+      "type": "object",
+      "required": true
+    },
+    "reply:": {
+      "type": {
+        "type": "string",
+        "required": true
+      },
+      "content": {
+        "type": "string",
+        "required": true
+      }
+    }
+  },
+  "validations": [],
+  "relations": {
+    "sms": {
+      "type": "belongsTo",
+      "model": "Sms",
+      "foreignKey": "smsId"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

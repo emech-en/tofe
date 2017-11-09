@@ -1,0 +1,65 @@
+{
+  "_meta": {
+    "sources": [
+      "loopback/common/models",
+      "loopback/server/models",
+      "../common/models",
+      "./models"
+    ],
+    "mixins": [
+      "loopback/common/mixins",
+      "loopback/server/mixins",
+      "../common/mixins",
+      "./mixins"
+    ]
+  },
+  "User": {
+    "dataSource": "mongodbDs"
+  },
+  "AccessToken": {
+    "dataSource": "mongodbDs",
+    "public": false
+  },
+  "ACL": {
+    "dataSource": "mongodbDs",
+    "public": false
+  },
+  "RoleMapping": {
+    "dataSource": "mongodbDs",
+    "public": false
+  },
+  "Role": {
+    "dataSource": "mongodbDs",
+    "public": false
+  },
+  "Category": {
+    "dataSource": "mongodbDs",
+    "public": true,
+    "$promise": {},
+    "$resolved": true
+  },
+  "Service": {
+    "dataSource": "mongodbDs",
+    "public": true
+  },
+  "Profile": {
+    "dataSource": "mongodbDs",
+    "public": true
+  },
+  "Acount": {
+    "dataSource": "mongodbDs",
+    "public": true
+  },
+  "Sms": {
+    "dataSource": "mongodbDs",
+    "public": true
+  },
+  "SmsCommand": {
+    "dataSource": "mongodbDs",
+    "public": true
+  },
+  "NewModel": {
+    "dataSource": "mongodbDs",
+    "public": true
+  }
+}

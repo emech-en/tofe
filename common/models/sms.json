@@ -1,0 +1,104 @@
+{
+  "name": "Sms",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "content": {
+      "type": "string"
+    },
+    "msisdn": {
+      "type": "string",
+      "required": true
+    },
+    "date": {
+      "type": "date",
+      "required": true,
+      "defaultFn": "now"
+    },
+    "originId": {
+      "type": "string"
+    },
+    "received": {
+      "type": {
+        "smsId": {
+          "type": "string"
+        }
+      }
+    },
+    "sent": {
+      "type": {
+        "smsType": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "validations": [],
+  "relations": {
+    "reply": {
+      "type": "hasOne",
+      "model": "Sms",
+      "foreignKey": "originId"
+    },
+    "origin": {
+      "type": "belongsTo",
+      "model": "Sms",
+      "foreignKey": "originId"
+    },
+    "smsCommands": {
+      "type": "hasMany",
+      "model": "SmsCommand",
+      "foreignKey": "smsId"
+    }
+  },
+  "acls": [],
+  "methods": {
+    "receive": {
+      "isStatic": true,
+      "accepts": [
+        {
+          "arg": "id",
+          "type": "string",
+          "required": true,
+          "description": "Unique Id of the received sms from sms server"
+        },
+        {
+          "arg": "msisdn",
+          "type": "string",
+          "required": true,
+          "description": "Msisnd of the sender of the sms"
+        },
+        {
+          "arg": "content",
+          "type": "string",
+          "required": false,
+          "description": "Content of the sms"
+        },
+        {
+          "arg": "token",
+          "type": "string",
+          "required": true,
+          "description": "DataValidation token"
+        }
+      ],
+      "returns": [
+        {
+          "arg": "result",
+          "type": "string",
+          "root": false,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/receive",
+          "verb": "post"
+        }
+      ]
+    }
+  }
+}

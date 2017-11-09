@@ -1,0 +1,40 @@
+{
+  "name": "Category",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "desciption": {
+      "type": "string"
+    },
+    "parentId": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "subcategories": {
+      "type": "hasMany",
+      "model": "Category",
+      "foreignKey": "parentId"
+    },
+    "parent": {
+      "type": "belongsTo",
+      "model": "Category",
+      "foreignKey": "parentId"
+    },
+    "services": {
+      "type": "hasMany",
+      "model": "Service",
+      "foreignKey": "categoryId"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}
